@@ -1,0 +1,30 @@
+#!/bin/bash
+
+# Minta input MAC address dari user
+read -p "Masukkan MAC Address target: " MAC_ADDRESS
+
+# Output awal
+echo "[*] Starting MAC brute-force on $MAC_ADDRESS..."
+echo "[*] Trying..."
+
+# Simulasi kombinasi yang benar (ubah sesuai kebutuhan simulasi)
+CORRECT_USER="admin"
+CORRECT_PASS="1234"
+
+FOUND=0
+
+# Baca kombinasi dari user.txt dan pass.txt
+while IFS= read -r user; do
+    while IFS= read -r pass; do
+        if [[ "$user" == "$CORRECT_USER" && "$pass" == "$CORRECT_PASS" ]]; then
+            echo "[+] SUCCESS! Username: $user | Password: $pass"
+            FOUND=1
+            break 2
+        fi
+    done < pass.txt
+done < user.txt
+
+# Tampilkan jika gagal
+if [ "$FOUND" -eq 0 ]; then
+    echo "[!] Failed! Username and Password not found."
+fi
